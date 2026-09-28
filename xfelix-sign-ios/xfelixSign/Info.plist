@@ -4,27 +4,38 @@
 <dict>
     <key>CFBundleDisplayName</key>
     <string>xFelix Sign</string>
+
     <key>CFBundleName</key>
-    <string>xfelixSign</string>
+    <string>xFelix Sign</string>
+
+    <key>CFBundleExecutable</key>
+    <string>$(EXECUTABLE_NAME)</string>
+
     <key>CFBundleIdentifier</key>
     <string>de.xfelix.sign</string>
+
     <key>CFBundleShortVersionString</key>
     <string>1.0.0</string>
+
     <key>CFBundleVersion</key>
     <string>1</string>
+
     <key>UILaunchScreen</key>
     <dict>
         <key>UIColorName</key>
         <string>LaunchBackground</string>
     </dict>
+
     <key>UIStatusBarStyle</key>
     <string>UIStatusBarStyleLightContent</string>
+
     <key>UISupportedInterfaceOrientations</key>
     <array>
         <string>UIInterfaceOrientationPortrait</string>
         <string>UIInterfaceOrientationLandscapeLeft</string>
         <string>UIInterfaceOrientationLandscapeRight</string>
     </array>
+
     <key>UISupportedInterfaceOrientations~ipad</key>
     <array>
         <string>UIInterfaceOrientationPortrait</string>
