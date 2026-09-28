@@ -24,7 +24,6 @@ jobs:
           find . -maxdepth 4 -type f | sort
 
       - name: Build
-        working-directory: xfelix-sign-ios
         run: |
           xcodebuild \
             -project xfelixSign.xcodeproj \
@@ -36,7 +35,6 @@ jobs:
             CODE_SIGNING_REQUIRED=NO
 
       - name: Package app
-        working-directory: xfelix-sign-ios
         run: |
           mkdir -p Payload
           cp -R "build/Build/Products/Release-iphoneos/xFelix Sign.app" Payload/
@@ -46,4 +44,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: xFelix-Sign-IPA
-          path: xfelix-sign-ios/xFelix-Sign-unsigned.ipa
+          path: xFelix-Sign-unsigned.ipa
