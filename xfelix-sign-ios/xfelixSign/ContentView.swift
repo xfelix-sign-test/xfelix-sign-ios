@@ -1,5 +1,4 @@
-```swift
-import SwiftUI
+﻿import SwiftUI
 import WebKit
 
 struct ContentView: View {
@@ -54,7 +53,10 @@ struct WebView: UIViewRepresentable {
         configuration.allowsInlineMediaPlayback = true
         configuration.defaultWebpagePreferences.allowsContentJavaScript = true
 
-        let webView = WKWebView(frame: .zero, configuration: configuration)
+        let webView = WKWebView(
+            frame: .zero,
+            configuration: configuration
+        )
 
         webView.navigationDelegate = context.coordinator
         webView.uiDelegate = context.coordinator
@@ -80,7 +82,10 @@ struct WebView: UIViewRepresentable {
         return webView
     }
 
-    func updateUIView(_ webView: WKWebView, context: Context) {
+    func updateUIView(
+        _ webView: WKWebView,
+        context: Context
+    ) {
         DispatchQueue.main.async {
             if webViewReference !== webView {
                 webViewReference = webView
@@ -88,7 +93,9 @@ struct WebView: UIViewRepresentable {
         }
     }
 
-    final class Coordinator: NSObject, WKNavigationDelegate, WKUIDelegate {
+    final class Coordinator: NSObject,
+        WKNavigationDelegate,
+        WKUIDelegate {
 
         private func shouldOpenExternally(_ url: URL) -> Bool {
             guard let scheme = url.scheme?.lowercased() else {
@@ -129,10 +136,14 @@ struct WebView: UIViewRepresentable {
             if let host = url.host?.lowercased(),
                host == "xfelix-sign.de" ||
                host == "www.xfelix-sign.de" {
+
                 decisionHandler(.allow)
+
             } else if url.scheme?.lowercased() == "https" {
+
                 openExternally(url)
                 decisionHandler(.cancel)
+
             } else {
                 decisionHandler(.allow)
             }
@@ -144,11 +155,13 @@ struct WebView: UIViewRepresentable {
             for navigationAction: WKNavigationAction,
             windowFeatures: WKWindowFeatures
         ) -> WKWebView? {
+
             guard let url = navigationAction.request.url else {
                 return nil
             }
 
-            if shouldOpenExternally(url) || url.scheme?.lowercased() == "https" {
+            if shouldOpenExternally(url) ||
+               url.scheme?.lowercased() == "https" {
                 openExternally(url)
             }
 
@@ -164,4 +177,3 @@ struct WebView: UIViewRepresentable {
         }
     }
 }
-```
