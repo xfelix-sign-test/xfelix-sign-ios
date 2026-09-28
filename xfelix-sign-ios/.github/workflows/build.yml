@@ -1,10 +1,10 @@
 name: Build xFelix Sign
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - main
-  workflow_dispatch:
 
 jobs:
   build:
@@ -15,16 +15,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Diagnose paths
+      - name: Show repository structure
         run: |
-          echo "Current directory:"
           pwd
-          echo "Files:"
-          ls -la
-          echo "Xcode project:"
-          ls -la xfelixSign.xcodeproj
-          echo "Project file:"
-          test -f xfelixSign.xcodeproj/project.pbxproj
+          echo "Repository files:"
+          find . -maxdepth 3 -type f | sort
+          echo "Xcode projects:"
+          find . -name "*.xcodeproj" -print
 
       - name: Show Xcode version
         run: xcodebuild -version
@@ -32,18 +29,18 @@ jobs:
       - name: Build
         run: |
           xcodebuild \
-            -project "$GITHUB_WORKSPACE/xfelixSign.xcodeproj" \
+            -project xfelixSign.xcodeproj \
             -scheme "xFelix Sign" \
             -sdk iphoneos \
             -configuration Release \
-            -derivedDataPath "$GITHUB_WORKSPACE/build" \
+            -derivedDataPath build \
             CODE_SIGNING_ALLOWED=NO \
             CODE_SIGNING_REQUIRED=NO
 
       - name: Package app
         run: |
           mkdir -p Payload
-          cp -R "$GITHUB_WORKSPACE/build/Build/Products/Release-iphoneos/xFelix Sign.app" Payload/
+          cp -R "build/Build/Products/Release-iphoneos/xFelix Sign.app" Payload/
           zip -r xFelix-Sign-unsigned.ipa Payload
 
       - name: Upload IPA
